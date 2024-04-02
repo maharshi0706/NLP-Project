@@ -22,3 +22,21 @@ combined_features = pos_tags + bi_grams_str + tri_grams_str
 test_sample_vectorized = vectorizer.transform([' '.join(combined_features)])
 prediction = model.predict(test_sample_vectorized)
 print("Predicted label:", prediction)
+
+X_combined_vectorized = vectorizer.fit_transform(X_combined)
+
+X_pos_str = [[' '.join(tag) for tag in sentence] for sentence in X_pos]
+
+X_combined_text = [' '.join(pos_features) + ' ' + ' '.join(ngrams) for pos_features, ngrams in zip(X_pos_str, data['ngrams'])]
+
+# def preprocessText(text):
+#     text = ' '.join(text)
+#     text = text.lower()
+#     text = [word for word in text if word not in string.punctuation]
+#     text = ''.join(text)
+#     tokens = [token for token in text if token not in stop_words]
+#     tokens = word_tokenize(text)
+#     print(tokens)
+#     # lemmatizedTokens = [lemmatizer.lemmatize(word) for word in text if word not in stop_words]
+#     preprocessedText = ' '.join(tokens)
+#     return preprocessedText
