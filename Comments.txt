@@ -1,0 +1,24 @@
+testText = data['Preprocessed Text'][145]
+# posTags = []
+# ngramsList = []
+# posTags = pos_features(testText)
+# ngramsList = extract_ngrams(testText,2)
+# combinedFeatures = posTags + ngramsList
+# print(combinedFeatures)
+# combinedFeaturesVectorizer = vectorizer.transform([' '.join(combinedFeatures)])
+# predictedLabel = model.predict(combinedFeaturesVectorizer)
+# print(f'Predicted Label:{predictedLabel[0]}')
+
+pos_tags = [tag for _, tag in pos_tag(word_tokenize(testText))]
+
+tokens = word_tokenize(testText)
+bi_grams = list(ngrams(tokens, 2))  
+tri_grams = list(ngrams(tokens, 3))  
+
+bi_grams_str = [' '.join(gram) for gram in bi_grams]
+tri_grams_str = [' '.join(gram) for gram in tri_grams]
+
+combined_features = pos_tags + bi_grams_str + tri_grams_str
+test_sample_vectorized = vectorizer.transform([' '.join(combined_features)])
+prediction = model.predict(test_sample_vectorized)
+print("Predicted label:", prediction)
